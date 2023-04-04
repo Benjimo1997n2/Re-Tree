@@ -11,19 +11,21 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
     <script src="scripts/score.js"></script>
+    <script src="scripts/grass.js"></script>
+    <script src="scripts/generateTrees.js"></script>
+    <script src="scripts/gui.js"></script>
+    <script src="scripts/tree.js"></script>
     <script src="scene.js"></script>
-    <script src="gui.js"></script>
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
     <div id="control-pannel">
-        <h1>Control Pannel</h1>
-        <p>CO2: <span id="CO2"></span></p>
-        <p>Score: <span id="score"></span></p>
-        <p>Level: <span id="level"></span></p>
-        <p>Time: <span id="time"></span></p>
-        <p>Token: <span id="token"></span></p>
+        <h1>Admin Control Pannel</h1>
+        <input name="CO2" id="CO2" >
+        <input name="CO2_per_sec" id="CO2_per_sec">
+        <button id="cheat" name="cheat">Cheat</button>
         <button id="reset" onclick="resetScore()">Reset</button>
     </div>
     <script>
@@ -43,5 +45,6 @@
             });
         })();
     </script>
+    <script src="/scripts/admin.js"></script>
 </body>
 </html>

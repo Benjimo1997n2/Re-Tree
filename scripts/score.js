@@ -1,7 +1,5 @@
-const userToken = createToken(); // Assume createToken() is a function that returns the user's token
-const tokenExists = checkToken(userToken);
-var tCO2 = false;
-
+// This script handles the score and user data
+// Create a token for the user based on their browser data
 function createToken() {
     // Gather browser data
     const userAgent = navigator.userAgent;
@@ -15,43 +13,55 @@ function createToken() {
 
     return token;
 }
+// The initial data
+function createInitialUserData() {
+    return {
+        CO2: 0,
+        CO2_per_sec: 1,
+        plants: [],
+    };
+}
+// Check if token exists in local storage
 function checkToken(token) {
     // Check if token exists in local storage
     if (localStorage.getItem(token) !== null) {
+        console.log(localStorage.getItem(token));
         return true;
     } else {
         return false;
     }
 }
-
+// Get token value from local storage
 function getTokenValue(token) {
     // Get token value from local storage
     const tokenValue = localStorage.getItem(token);
-
-    // Return token value
-    return tokenValue;
+    console.log(`Token value for token ${token} is ${tokenValue}.`);
+    // Return parsed token value
+    return JSON.parse(tokenValue);
+}
+// Update token value in local storage
+function updateTokenValue(token, data) {
+    // Convert user data object to a JSON string
+    const dataString = JSON.stringify(data);
+    // Update the token value in local storage
+    localStorage.setItem(token, dataString);
 }
 
-function addNewToken(token) {
-    // Set token and score to local storage
-    localStorage.setItem(token, 0);
+// Create a token for the user
+const userToken = createToken();
+// Retrieve user data from local storage
+const userData = getTokenValue(userToken);
+const tokenExists = checkToken(userToken);
+let score_flag = {value: false, data: userData};
+
+// If token does not exist, create it
+if (tokenExists == false) {
+    updateTokenValue(userToken, createInitialUserData());
 }
+console.log(userData);
 
-if (tokenExists) {
-    console.log('Token exists in local storage.');
-} else {
-    console.log('Token does not exist in local storage.');
-    addNewToken(userToken);
-    console.log('New token added to local storage with score of 0.');
-}
-
-function updateScoreToken(token, score) {
-
-    // Update score in local storage
-    localStorage.setItem(token, score);
-
-    // Log message indicating score update
-    console.log(`Score for token ${token} has been updated to ${score}.`);
-}
-
-function resetScore(){ tCO2 = true; }
+// Reset the score
+function resetScore(){ 
+    userData.CO2 = 0;
+    score_flag = {value: true, data: userData};
+ }
