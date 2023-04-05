@@ -1,3 +1,10 @@
+const treesSize = {
+    0: {sizeBranch: 10, sizeTrunk: 15},
+    1: {sizeBranch: 15, sizeTrunk: 20},
+    2: {sizeBranch: 20, sizeTrunk: 25},
+    3: {sizeBranch: 25, sizeTrunk: 30},
+}
+
 const GenerateTrees = function(scene, ground) {
     const leafMaterial = new BABYLON.StandardMaterial("leafMaterial", scene);
     leafMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
@@ -7,10 +14,6 @@ const GenerateTrees = function(scene, ground) {
     woodTexture.ampScale = 50;
     woodMaterial.diffuseTexture = woodTexture;
 
-    // const tree = QuickTreeGenerator(15, 10, 5, woodMaterial, leafMaterial, scene);
-    // tree.position.x = 0;
-    // tree.position.y = 0.2;
-
     // const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 10, height: 10 }, scene);
     const treeArray = []; // Create an array to store the tree objects
 
@@ -19,7 +22,14 @@ const GenerateTrees = function(scene, ground) {
     const treesPerRow = Math.ceil(Math.sqrt(numTrees)); // Calculate the number of trees per row
 
     for (let i = 0; i < numTrees; i++) {
-        const tree = QuickTreeGenerator(15, 10, 5, woodMaterial, leafMaterial, scene);
+        // var toto = 10;
+        // var titi = 15;
+        // if(i == 0) { 
+        //     toto = 20; 
+        //     titi = 30; 
+        // }
+        console.log(userData.plants[i].lvl);
+        const tree = QuickTreeGenerator(treesSize[userData.plants[i].lvl].sizeBranch, treesSize[userData.plants[i].lvl].sizeTrunk, 5, woodMaterial, leafMaterial, scene);
 
         // Calculate the tree's x and z position based on the index and spacing
         const xPos = (i % treesPerRow) * treeSpacing - (ground.scaling.x / 2 - treeSpacing / 2);
@@ -34,17 +44,8 @@ const GenerateTrees = function(scene, ground) {
         if(userData.plants[i].color) {
             changeLeafColor(tree, new BABYLON.Color3(userData.plants[i].color.r, userData.plants[i].color.g, userData.plants[i].color.b));
         }
-
-        // console.log(xPos, zPos); // Log the tree's x and z position
     }
 
-    // // Add a pointerDown event to the scene
-    // scene.onPointerDown = function (evt, pickResult) {
-    //     if (pickResult.hit && pickResult.pickedMesh) {
-    //         // buyTree(pickResult.pickedMesh);
-    //         // changeLeafColor(pickResult.pickedMesh);
-    //     }
-    // };
     scene.onPointerDown = function (evt, pickResult) {
         if (pickResult.hit && pickResult.pickedMesh) {
             const pickedMesh = pickResult.pickedMesh;
