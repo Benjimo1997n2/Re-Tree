@@ -41,6 +41,7 @@ const BuildGui = function() {
         
         scoreText.text = `CO2: ${userData.CO2}`;
         // Update UI or any other relevant code here
+        updateUserDataPannel();
         updateTokenValue(userToken, userData);
     }    
 

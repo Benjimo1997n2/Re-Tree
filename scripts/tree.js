@@ -1,8 +1,5 @@
 // Tree Generator code from https://github.com/BabylonJS/Extensions/blob/master/TreeGenerators/QuickTreeGenerator/QuickTreeGenerator.js
 const QuickTreeGenerator = function(sizeBranch, sizeTrunk, radius, trunkMaterial, leafMaterial, scene) {
-
-    const activatedTreeColor = new BABYLON.Color3(0.2, 0.8, 0.2);
-
     const tree = new BABYLON.Mesh("tree", scene);
     tree.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05); // Adjust the scaling if needed
 

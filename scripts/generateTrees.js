@@ -1,6 +1,6 @@
 const generateTrees = function(scene, ground) {
     const leafMaterial = new BABYLON.StandardMaterial("leafMaterial", scene);
-    leafMaterial.diffuseColor = new BABYLON.Color3(0.5, 1, 0.5);
+    leafMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
   
     const woodMaterial = new BABYLON.StandardMaterial("wood", scene);
     const woodTexture = new BABYLON.WoodProceduralTexture("woodtexture", 512, scene);
@@ -35,25 +35,56 @@ const generateTrees = function(scene, ground) {
     }
     console.log(treeArray[0].lvl); // Log the tree's x and z position
 
-    // Add a pointerDown event to the scene
+    // // Add a pointerDown event to the scene
+    // scene.onPointerDown = function (evt, pickResult) {
+    //     if (pickResult.hit && pickResult.pickedMesh) {
+    //         // buyTree(pickResult.pickedMesh);
+    //         // changeLeafColor(pickResult.pickedMesh);
+    //     }
+    // };
     scene.onPointerDown = function (evt, pickResult) {
         if (pickResult.hit && pickResult.pickedMesh) {
-            changeLeafColor(pickResult.pickedMesh);
+            const pickedMesh = pickResult.pickedMesh;
+    
+            // Check if the picked mesh is part of a tree (either leaves or trunk)
+            if (pickedMesh.parent && pickedMesh.parent instanceof BABYLON.Mesh) {
+                const tree = pickedMesh.parent;
+    
+                // Check if the tree has a leaves and trunk child
+                if (tree.getChildMeshes().some(child => child.name === "sphere") && tree.getChildMeshes().some(child => child.name === "trunk")) {
+                    // Call the onTreeClicked function with the tree as its parameter
+                    onTreeClicked(tree);
+                }
+            }
         }
     };
+    
 
     return treeArray;
 }
 
+function onTreeClicked(tree) {
+    // Your custom logic when a tree is clicked
+    console.log("Tree clicked:", tree.lvl);
+    newUserData = buyTree(tree, userData);
+    console.log(tree.lvl)
+
+    userData.CO2 = newUserData.CO2;
+    userData.CO2_per_sec = newUserData.CO2_per_sec;
+
+    changeLeafColor(tree);
+}
+
+
 const changeLeafColor = function(clickedMesh) {
-    console.log(clickedMesh.parent.leafMaterial);
     // Make sure the clicked mesh is part of a tree
-    if (clickedMesh.parent && clickedMesh.parent.leafMaterial !== undefined) {
-        const tree = clickedMesh.parent;
+    // if (clickedMesh.parent && clickedMesh.parent.leafMaterial !== undefined) {
+        // const tree = clickedMesh.parent;
+        const tree = clickedMesh;
 
         // Change the leaf material's color
         const newLeafMaterial = tree.leafMaterial.clone("newLeafMaterial");
-        newLeafMaterial.diffuseColor = new BABYLON.Color3(0.1, 0, 1); // Set the new color here
+        newLeafMaterial.diffuseColor = new BABYLON.Color3(0.1, 0.8, 0); // Set the new color here
 
         // Update the tree's leaves with the new material
         tree.getChildMeshes().forEach(child => {
@@ -65,6 +96,6 @@ const changeLeafColor = function(clickedMesh) {
         console.log(tree.leafMaterial.diffuseColor.toString);
         // Update the tree's leafMaterial reference
         tree.leafMaterial = newLeafMaterial;
-    }
+    // }
 }
 

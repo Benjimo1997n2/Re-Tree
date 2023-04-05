@@ -1,4 +1,4 @@
-const generateGrass = function(scene, ground) {
+const GenerateGrass = function(scene, ground) {
     // Grass from https://playground.babylonjs.com/#NZDFUB#1
 
     // Create a grass material

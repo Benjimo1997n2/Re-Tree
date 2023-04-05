@@ -14,7 +14,7 @@ const createScene = async (engine) => {
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 10, height: 10}, scene);
 
     // Generate the moving grass
-    generateGrass(scene, ground);
+    GenerateGrass(scene, ground);
 
     // Generate the trees
     const treeArray = generateTrees(scene, ground);
