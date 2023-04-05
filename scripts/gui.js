@@ -31,10 +31,12 @@ const BuildGui = function() {
         if(score_flag["value"] == true) { 
             userData.CO2 = score_flag["data"]["CO2"];
             userData.CO2_per_sec = score_flag["data"]["CO2_per_sec"];
+            userData.plants = score_flag["data"]["plants"];
             score_flag["value"] = false;
         }
 
         userData.CO2 += increment;
+        console.log(userData.plants[0].lvl);
 
         // document.getElementById("CO2").value = userData.CO2;
         // document.getElementById("CO2_per_sec").value = userData.CO2_per_sec;

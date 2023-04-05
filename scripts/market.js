@@ -1,15 +1,17 @@
 // Define the treesShop object, containing data for each level of the tree
 // including price, CO2_per_sec, and color.
 const treesShop = {
-    0: { price: 10, CO2_per_sec: 1, color: new BABYLON.Color3(1, 0, 0) },
-    1: { price: 100, CO2_per_sec: 10, color: new BABYLON.Color3(0, 1, 0) },
-    2: { price: 1000, CO2_per_sec: 100, color: new BABYLON.Color3(0, 0, 1) },
+    0: { price: 10, CO2_per_sec: 1, color: new BABYLON.Color3(0, 1, 0) },
+    1: { price: 10000, CO2_per_sec: 10, color: new BABYLON.Color3(1, 0, 0) },
+    2: { price: 10000000, CO2_per_sec: 100, color: new BABYLON.Color3(0, 0, 1) },
 }
 
 // Define the buyTree function, which takes a tree and userData as arguments.
 const buyTree = function(tree, userData) {
     // Log the tree's current level
     console.log(tree.lvl);
+    // userData.plants[tree.id].lvl = tree.lvl;
+    // updateTokenValue(userToken, userData);
 
     // Get the data for the current level of the tree from the treesShop object
     const treeData = treesShop[tree.lvl];
@@ -30,6 +32,10 @@ const buyTree = function(tree, userData) {
 
         // Increment the tree's level by 1
         tree.lvl += 1;
+
+        userData.plants[tree.id].lvl = tree.lvl;
+        userData.plants[tree.id].color = tree.color;
+        score_flag = {value: true, data: userData};
     }
 
     // Return the updated user data

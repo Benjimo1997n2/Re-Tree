@@ -15,10 +15,17 @@ function createToken() {
 }
 // The initial data
 function createInitialUserData() {
+
+    let numTrees = 25;
+    let trees = [];
+    for (let i = 0; i < numTrees; i++) {
+        trees[i] = new Tree(i, 0, "Tree lvl 0", BABYLON.Color3(1, 1, 1))
+    }
+
     return {
         CO2: 0,
         CO2_per_sec: 1,
-        plants: [],
+        plants: trees,
     };
 }
 // Check if token exists in local storage
@@ -46,19 +53,6 @@ function updateTokenValue(token, data) {
     // Update the token value in local storage
     localStorage.setItem(token, dataString);
 }
-
-// Create a token for the user
-const userToken = createToken();
-// Retrieve user data from local storage
-const userData = getTokenValue(userToken);
-const tokenExists = checkToken(userToken);
-let score_flag = {value: false, data: userData};
-
-// If token does not exist, create it
-if (tokenExists == false) {
-    updateTokenValue(userToken, createInitialUserData());
-}
-console.log(userData);
 
 // Reset the score
 function resetScore(){ 

@@ -87,3 +87,12 @@ const QuickTreeGenerator = function(sizeBranch, sizeTrunk, radius, trunkMaterial
 
     return tree
 }
+
+class Tree {
+    constructor(id, lvl, name, color) {
+        this.id = id;
+        this.lvl = lvl;
+        this.name = name;
+        this.color = color;
+    }
+}

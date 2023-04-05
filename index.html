@@ -30,8 +30,28 @@
         <input name="CO2_per_sec" id="CO2_per_sec">
         <button id="cheat" name="cheat">Cheat</button>
         <button id="reset" onclick="resetScore()">Reset</button>
+        <h2>Selected tree</h2>
+        <p id="tree_id"></p>
+        <p id="tree_lvl"></p>
+        <p id="tree_price"></p>
+        <p id="tree_CO2_per_sec"></p>
+        <p id="tree_color"></p>
+        <button id="buy_tree" disabled>Buy</button>
     </div>
     <script>
+        // Create a token for the user
+        const userToken = createToken();
+        // Retrieve user data from local storage
+        const userData = getTokenValue(userToken);
+        const tokenExists = checkToken(userToken);
+        let score_flag = {value: false, data: userData};
+
+        // If token does not exist, create it
+        if (tokenExists == false) {
+            updateTokenValue(userToken, createInitialUserData());
+        }
+        console.log(userData);
+        
         (async () => {
             // Get the canvas element, create the Babylon.js engine and run the render loop
             const renderCanvas = document.getElementById("renderCanvas");
