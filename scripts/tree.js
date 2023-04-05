@@ -100,6 +100,20 @@ const createLeafAnimation = function(leaves) {
 
     animation.setKeys(keyFrames);
     leaves.animations.push(animation);
+
+    const scaleAnimation = new BABYLON.Animation("scaleAnimation", "scaling", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    const originalScale = leaves.scaling.clone();
+    const scaleFactor = randomNumber(0.9, 1.1);
+    const scaledVector = originalScale.multiply(new BABYLON.Vector3(scaleFactor, scaleFactor, scaleFactor));
+
+    const scaleKeyFrames = [];
+    scaleKeyFrames.push({ frame: 0, value: originalScale });
+    scaleKeyFrames.push({ frame: 30, value: scaledVector });
+    scaleKeyFrames.push({ frame: 60, value: originalScale });
+
+    scaleAnimation.setKeys(scaleKeyFrames);
+    leaves.animations.push(scaleAnimation);
 };
 
 class Tree {
