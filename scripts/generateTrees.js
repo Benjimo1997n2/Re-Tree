@@ -5,6 +5,10 @@ const treesSize = {
     3: {sizeBranch: 25, sizeTrunk: 30},
 }
 
+const randomNumber = function(min, max) {
+    return Math.random() * (max - min) + min;
+};
+
 const GenerateTrees = function(scene, ground) {
     const leafMaterial = new BABYLON.StandardMaterial("leafMaterial", scene);
     leafMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
@@ -22,14 +26,15 @@ const GenerateTrees = function(scene, ground) {
     const treesPerRow = Math.ceil(Math.sqrt(numTrees)); // Calculate the number of trees per row
 
     for (let i = 0; i < numTrees; i++) {
-        // var toto = 10;
-        // var titi = 15;
-        // if(i == 0) { 
-        //     toto = 20; 
-        //     titi = 30; 
-        // }
-        console.log(userData.plants[i].lvl);
         const tree = QuickTreeGenerator(treesSize[userData.plants[i].lvl].sizeBranch, treesSize[userData.plants[i].lvl].sizeTrunk, 5, woodMaterial, leafMaterial, scene);
+
+        // Randomly animate the tree's leaves
+        const randomFrom = 0;
+        const randomTo = 75;
+        const randomSpeedRatio = randomNumber(0.75, 1.25);
+
+        // Animate the tree's leaves
+        scene.beginAnimation(tree.getChildMeshes()[0], randomFrom, randomTo, true, randomSpeedRatio);
 
         // Calculate the tree's x and z position based on the index and spacing
         const xPos = (i % treesPerRow) * treeSpacing - (ground.scaling.x / 2 - treeSpacing / 2);

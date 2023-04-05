@@ -84,9 +84,23 @@ const QuickTreeGenerator = function(sizeBranch, sizeTrunk, radius, trunkMaterial
     trunk.parent = tree;
 
     leaves.position.y = (sizeTrunk + sizeBranch) / 2-2;
+    
+    createLeafAnimation(leaves);
 
     return tree
 }
+
+const createLeafAnimation = function(leaves) {
+    const animation = new BABYLON.Animation("leafAnimation", "position.y", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    const keyFrames = [];
+    keyFrames.push({ frame: 0, value: leaves.position.y });
+    keyFrames.push({ frame: 30, value: leaves.position.y + 0.5 });
+    keyFrames.push({ frame: 60, value: leaves.position.y });
+
+    animation.setKeys(keyFrames);
+    leaves.animations.push(animation);
+};
 
 class Tree {
     constructor(id, lvl, name, color) {
