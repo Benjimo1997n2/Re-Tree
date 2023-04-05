@@ -1,4 +1,4 @@
-const generateTrees = function(scene, ground) {
+const GenerateTrees = function(scene, ground) {
     const leafMaterial = new BABYLON.StandardMaterial("leafMaterial", scene);
     leafMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
   
@@ -84,7 +84,9 @@ const changeLeafColor = function(clickedMesh) {
 
         // Change the leaf material's color
         const newLeafMaterial = tree.leafMaterial.clone("newLeafMaterial");
-        newLeafMaterial.diffuseColor = new BABYLON.Color3(0.1, 0.8, 0); // Set the new color here
+        // newLeafMaterial.diffuseColor = new BABYLON.Color3(0.1, 0.8, 0); // Set the new color here
+        console.log(tree.color);
+        newLeafMaterial.diffuseColor = tree.color; // Set the new color here
 
         // Update the tree's leaves with the new material
         tree.getChildMeshes().forEach(child => {

@@ -62,6 +62,6 @@ console.log(userData);
 
 // Reset the score
 function resetScore(){ 
-    userData.CO2 = 0;
-    score_flag = {value: true, data: userData};
+    // userData.CO2 = 0;
+    score_flag = {value: true, data: createInitialUserData()};
  }

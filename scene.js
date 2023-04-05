@@ -17,7 +17,7 @@ const createScene = async (engine) => {
     GenerateGrass(scene, ground);
 
     // Generate the trees
-    const treeArray = generateTrees(scene, ground);
+    const treeArray = GenerateTrees(scene, ground);
 
     BuildGui();
 
