@@ -31,7 +31,8 @@ const GenerateTrees = function(scene, ground) {
         // Randomly animate the tree's leaves
         const randomFrom = 0;
         const randomTo = 75;
-        const randomSpeedRatio = randomNumber(0.75, 1.25);
+        // const randomSpeedRatio = randomNumber(0.75, 1.25);
+        const randomSpeedRatio = randomNumber(0.25, 0.75);
 
         // Animate the tree's leaves
         scene.beginAnimation(tree.getChildMeshes()[0], randomFrom, randomTo, true, randomSpeedRatio);
@@ -77,15 +78,6 @@ var selectedTree = null;
 
 function onTreeClicked(tree) {
     selectedTree = tree;
-    // // Your custom logic when a tree is clicked
-    // console.log("Tree clicked:", tree.lvl);
-    // newUserData = buyTree(tree, userData);
-    // console.log(tree.lvl)
-
-    // userData.CO2 = newUserData.CO2;
-    // userData.CO2_per_sec = newUserData.CO2_per_sec;
-
-    // changeLeafColor(tree);
 }
 
 

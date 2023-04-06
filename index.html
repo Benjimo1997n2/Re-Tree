@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>Babylon.js - Re-Tree</title>
@@ -8,6 +8,7 @@
         #renderCanvas { width: 80%; height: 100%; touch-action: none; }
         #control-pannel { width: 20%; height: 1000px; background-color: #bbbbbb; float: right; }
     </style>
+    <audio id="background-music" src="assets/music/tmp8tftcirw.mp3" type="audio/mpeg" preload="auto"></audio>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
@@ -30,6 +31,11 @@
         <input name="CO2_per_sec" id="CO2_per_sec">
         <button id="cheat" name="cheat">Cheat</button>
         <button id="reset" onclick="resetScore()">Reset</button>
+        <h2>Music controls</h2>
+        <label for="volume-slider">Volume:</label>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.5">    
+        <button id="play-button">Play Music</button>
+        <button id="pause-button">Pause Music</button>
         <h2>Selected tree</h2>
         <p id="tree_id"></p>
         <p id="tree_lvl"></p>
@@ -38,6 +44,7 @@
         <p id="tree_color"></p>
         <button id="buy_tree" disabled>Buy</button>
     </div>
+    <script src="scripts/audio.js"></script>
     <script>
         // Create a token for the user
         const userToken = createToken();
@@ -51,7 +58,7 @@
             updateTokenValue(userToken, createInitialUserData());
         }
         console.log(userData);
-        
+
         (async () => {
             // Get the canvas element, create the Babylon.js engine and run the render loop
             const renderCanvas = document.getElementById("renderCanvas");
