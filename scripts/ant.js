@@ -1,16 +1,3 @@
-// const getAntCamera = async function(){
-//     // Create a camera and set its position
-//     const camera = new BABYLON.FollowCamera("followCamera", new BABYLON.Vector3(0, 10, -10), scene);
-
-//     // Create the ant model
-//     const ant = await createAnt(scene);
-//     camera.lockedTarget = ant; // Target the camera to follow the ant
-//     camera.radius = 3; // The distance from the ant to the camera
-//     camera.heightOffset = 1; // The height of the camera above the ant
-
-//     return camera;
-// }
-
 const playAnt = async function(scene){
     // Create a camera and set its position
     // const camera = new BABYLON.FollowCamera("followCamera", new BABYLON.Vector3(0, 10, -10), scene);
@@ -53,7 +40,7 @@ const playAnt = async function(scene){
             updateAntForwardVector(ant);
         }
         // Rotate
-        const rotationSpeed = 2;
+        const rotationSpeed = 3;
         if (inputMap["d"]) {
             // ant.rotation.y -= rotationSpeed;
             ant.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, -rotationSpeed, 0));
@@ -103,7 +90,8 @@ async function createAnt(scene) {
     const ant = BABYLON.MeshBuilder.CreateBox("ant", {size: 0.5}, scene);
 
     // Add physics to the ant
-    ant.physicsImpostor = new BABYLON.PhysicsImpostor(ant, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0 }, scene);
+    // ant.physicsImpostor = new BABYLON.PhysicsImpostor(ant, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0 }, scene);
+    ant.physicsImpostor = new BABYLON.PhysicsImpostor(ant, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0, friction: 0.1 }, scene);
 
     ant.position.y = 0.25; // Raise the ant to be above the ground
     ant.checkCollisions = true;

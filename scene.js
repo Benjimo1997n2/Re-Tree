@@ -19,10 +19,10 @@ const createScene = async (engine) => {
 
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(
         ground,
-        BABYLON.PhysicsImpostor.BoxImpostor,
-        { mass: 0, restitution: 0.9 },
+        BABYLON.PhysicsImpostor.PlaneImpostor,
+        { mass: 0, restitution: 0.1, friction: 0.01 },
         scene
-    );
+    );    
     
     // Generate the moving grass
     GenerateGrass(scene, ground);
