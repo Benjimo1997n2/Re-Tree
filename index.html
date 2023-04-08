@@ -6,10 +6,12 @@
     <link rel="stylesheet" href="style.css">
     <audio id="background-music" src="assets/music/tmp8tftcirw.mp3" type="audio/mpeg" preload="auto"></audio>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="assets/cannon.js-master/build/cannon.min.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
     <script src="scripts/score.js"></script>
+    <script src="scripts/ant.js"></script>
     <script src="scripts/grass.js"></script>
     <script src="scripts/generateTrees.js"></script>
     <script src="scripts/gui.js"></script>
@@ -53,7 +55,6 @@
         if (tokenExists == false) {
             updateTokenValue(userToken, createInitialUserData());
         }
-        console.log(userData);
 
         (async () => {
             // Get the canvas element, create the Babylon.js engine and run the render loop

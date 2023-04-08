@@ -15,7 +15,6 @@ cheat.onclick = function() {
 
 buyTreeButton.onclick = function() {
     newUserData = buyTree(selectedTree, userData);
-    console.log(selectedTree.lvl)
 
     userData.CO2 = newUserData.CO2;
     userData.CO2_per_sec = newUserData.CO2_per_sec;

@@ -1,4 +1,6 @@
-const BuildGui = function() {
+let antMode = false;
+
+const BuildGui = function(scene) {
     // Import the Babylon GUI library
     const GUI = BABYLON.GUI;
 
@@ -19,6 +21,24 @@ const BuildGui = function() {
     scoreboardContainer.paddingLeft = "10px";
     advancedTexture.addControl(scoreboardContainer);
 
+    // Create the ant mode button
+    const antModeButton = GUI.Button.CreateSimpleButton("antModeButton", "Toggle Ant Mode");
+    antModeButton.width = "200px";
+    antModeButton.height = "40px";
+    antModeButton.color = "white";
+    antModeButton.cornerRadius = 5;
+    antModeButton.background = "rgba(0, 0, 0, 0.5)";
+    antModeButton.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    antModeButton.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    antModeButton.paddingTop = "10px";
+    antModeButton.paddingRight = "10px";
+    advancedTexture.addControl(antModeButton);
+
+    antModeButton.onPointerUpObservable.add(() => {
+        antMode = !antMode;
+        toggleAntMode(antMode, scene);
+    });
+
     // Create the scoreboard text
     const scoreText = new GUI.TextBlock();
     scoreText.text = "CO2: 0";
@@ -36,7 +56,6 @@ const BuildGui = function() {
         }
 
         userData.CO2 += increment;
-        console.log(userData.plants[0].lvl);
 
         // document.getElementById("CO2").value = userData.CO2;
         // document.getElementById("CO2_per_sec").value = userData.CO2_per_sec;
@@ -51,4 +70,12 @@ const BuildGui = function() {
     setInterval(() => {
         updateScore(userData.CO2_per_sec);
     }, 1000);
+}
+
+function toggleAntMode(activate, scene) {
+    if (activate) {
+        playAnt(scene);
+    } else {
+        // TODO REMOVE THE ANT
+    }
 }

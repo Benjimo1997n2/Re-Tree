@@ -32,7 +32,7 @@ function createInitialUserData() {
 function checkToken(token) {
     // Check if token exists in local storage
     if (localStorage.getItem(token) !== null) {
-        console.log(localStorage.getItem(token));
+        // console.log(localStorage.getItem(token));
         return true;
     } else {
         return false;

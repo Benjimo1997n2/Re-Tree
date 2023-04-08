@@ -9,7 +9,6 @@ const treesShop = {
 // Define the buyTree function, which takes a tree and userData as arguments.
 const buyTree = function(tree, userData) {
     // Log the tree's current level
-    console.log(tree.lvl);
     // userData.plants[tree.id].lvl = tree.lvl;
     // updateTokenValue(userToken, userData);
 
@@ -19,7 +18,6 @@ const buyTree = function(tree, userData) {
     // Check if the tree data exists and if the user has enough CO2 to buy the tree
     if (treeData && userData.CO2 >= treeData.price) {
         // Log the user data before making changes
-        console.log(userData);
 
         // Deduct the price of the tree from the user's CO2
         userData.CO2 -= treeData.price;
