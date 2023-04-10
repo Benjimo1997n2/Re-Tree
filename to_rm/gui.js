@@ -79,3 +79,15 @@ function toggleAntMode(activate, scene) {
         // TODO REMOVE THE ANT
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Get the reset button
+    const resetButton = document.getElementById("reset");
+    // Onclick, reset the score
+    resetButton.onclick = this.resetScore();
+});
+
+// Reset
+function resetScore() {
+    console.log("Resetting score");
+}

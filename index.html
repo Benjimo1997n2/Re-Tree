@@ -10,68 +10,25 @@
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-    <script src="scripts/score.js"></script>
-    <script src="scripts/ant.js"></script>
-    <script src="scripts/grass.js"></script>
-    <script src="scripts/generateTrees.js"></script>
-    <script src="scripts/gui.js"></script>
-    <script src="scripts/tree.js"></script>
-    <script src="scripts/market.js"></script>
-    <script src="scene.js"></script>
+    <script src="main.js"></script>
+    <script src="js/models/userDataModel.js"></script>
+    <script src="js/models/groundModel.js"></script>
+    <script src="js/models/antModel.js"></script>
+    <script src="js/models/treeModel.js"></script>
+    <script src="js/models/treeUpgraderModel.js"></script>
+    <script src="js/view/gameGui.js"></script>
+    <script src="js/view/treeView.js"></script>
+    <script src="js/view/antView.js"></script>
+    <script src="js/controller/treeController.js"></script>
+    <script src="js/controller/gameController.js"></script>
+    <script src="js/controller/antController.js"></script>
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
-    <div id="control-pannel">
-        <h1>Admin Control Pannel</h1>
-        <p id="CO2_txt"></p>
-        <p id="CO2_per_sec_txt"></p>
-        <input name="CO2" id="CO2" >
-        <input name="CO2_per_sec" id="CO2_per_sec">
-        <button id="cheat" name="cheat">Cheat</button>
-        <button id="reset" onclick="resetScore()">Reset</button>
-        <h2>Music controls</h2>
-        <label for="volume-slider">Volume:</label>
-        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.5">    
-        <button id="play-button">Play Music</button>
-        <button id="pause-button">Pause Music</button>
-        <h2>Selected tree</h2>
-        <p id="tree_id"></p>
-        <p id="tree_lvl"></p>
-        <p id="tree_price"></p>
-        <p id="tree_CO2_per_sec"></p>
-        <p id="tree_color"></p>
-        <button id="buy_tree" disabled>Buy</button>
-    </div>
-    <script src="scripts/audio.js"></script>
+    <!-- <script src="js/audio.js"></script> -->
     <script>
-        // Create a token for the user
-        const userToken = createToken();
-        // Retrieve user data from local storage
-        const userData = getTokenValue(userToken);
-        const tokenExists = checkToken(userToken);
-        let score_flag = {value: false, data: userData};
-
-        // If token does not exist, create it
-        if (tokenExists == false) {
-            updateTokenValue(userToken, createInitialUserData());
-        }
-
-        (async () => {
-            // Get the canvas element, create the Babylon.js engine and run the render loop
-            const renderCanvas = document.getElementById("renderCanvas");
-            const engine = new BABYLON.Engine(renderCanvas, true);
-            const scene = await createScene(engine);
-
-            engine.runRenderLoop(() => {
-                scene.render();
-            });
-
-            // Resize the engine when the window is resized
-            window.addEventListener("resize", () => {
-                engine.resize();
-            });
-        })();
+        initGame();
     </script>
-    <script src="/scripts/admin.js"></script>
+    <!-- <script src="/js/admin.js"></script> -->
 </body>
 </html>

@@ -90,8 +90,6 @@ const changeLeafColor = function(clickedMesh, color = null) {
         // Change the leaf material's color
         const newLeafMaterial = tree.leafMaterial.clone("newLeafMaterial");
         // newLeafMaterial.diffuseColor = new BABYLON.Color3(0.1, 0.8, 0); // Set the new color here
-        // console.log(tree.color);
-
 
         if(color) {
             newLeafMaterial.diffuseColor = color;

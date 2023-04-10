@@ -54,7 +54,7 @@ const playAnt = async function(scene){
             }
 
             if (isColliding) {
-            console.log("Ant is colliding!");
+            
             }
             updateAntForwardVector(ant);
         }
