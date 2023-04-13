@@ -26,7 +26,7 @@ class AntView {
             ant.scaling = new BABYLON.Vector3(0.001, 0.001, 0.001);
       
             // Move the mesh up by 2 units in the Y-axis
-            ant.position.y = 0.35;
+            ant.position.y = 4.35;
       
             this.antModel.antMesh = ant;
             resolve(ant);

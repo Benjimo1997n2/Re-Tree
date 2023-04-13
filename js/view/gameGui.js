@@ -145,20 +145,20 @@ class GameGui {
         this.scoreText.text = `CO2: ${value}`;
     }
 
-    updateScore(increment) {
-        if (this.score_flag["value"] == true) {
-            this.userData.CO2 = this.score_flag["data"]["CO2"];
-            this.userData.CO2_per_sec = this.score_flag["data"]["CO2_per_sec"];
-            this.userData.plants = this.score_flag["data"]["plants"];
-            this.score_flag["value"] = false;
-        }
+    // updateScore(increment) {
+    //     if (this.score_flag["value"] == true) {
+    //         this.userData.CO2 = this.score_flag["data"]["CO2"];
+    //         this.userData.CO2_per_sec = this.score_flag["data"]["CO2_per_sec"];
+    //         this.userData.plants = this.score_flag["data"]["plants"];
+    //         this.score_flag["value"] = false;
+    //     }
 
-        this.userData.CO2 += increment;
+    //     this.userData.CO2 += increment;
 
-        this.scoreText.text = `CO2: ${this.userData.CO2}`;
-        this.updateUserDataPannel();
-        this.updateTokenValue(this.userToken, this.userData);
-    }
+    //     this.scoreText.text = `CO2: ${this.userData.CO2}`;
+    //     this.updateUserDataPannel();
+    //     this.updateTokenValue(this.userToken, this.userData);
+    // }
 
     // Ant mode
     createAntModeButton() {

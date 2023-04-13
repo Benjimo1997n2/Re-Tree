@@ -6,21 +6,19 @@ class GameController {
         this.init();
     }
 
-    resetScore() {
-        this.userDataModel.userData.CO2 = 0;
-        this.userDataModel.userData.CO2_per_sec = 1;
-    
-        // Save updated user data
-        this.userDataModel.updateTokenValue(this.userDataModel.userToken, this.userDataModel.userData);
-    
-        // Update the score
-        this.updateScore();
-    }
-
     init() {
         this.updateScore();
         setInterval(() => {
-            this.incrementScore(this.userDataModel.userData.CO2_per_sec);
+            // Check if user have data
+            if (
+                this.userDataModel.userData.hasOwnProperty('CO2') &&
+                this.userDataModel.userData.hasOwnProperty('CO2_per_sec') &&
+                this.userDataModel.userData.hasOwnProperty('trees')
+            ) {
+                this.incrementScore(this.userDataModel.userData.CO2_per_sec);
+            } else {
+                this.resetScore();
+            }
         }, 1000);
 
         // Add an event listener to the reset button
@@ -64,5 +62,21 @@ class GameController {
             CO2_per_sec: 1,
             trees: trees,
         };
+    }
+
+    initGameComponents(scene) {
+        this.ground = new Ground(scene);
+
+        const groundView = new GroundView(this.ground);
+        
+        const skyboxView = new SkyboxView(scene);
+        skyboxView.createSkybox();
+        
+        const continuousGroundView = new ContinuousGroundView(this.ground);
+        continuousGroundView.createContinuousGroundMesh();
+        groundView.createGroundMesh();
+
+        const waterView = new WaterView(this.ground, continuousGroundView.continuousGround);
+        waterView.createWaterMesh();
     }
 }

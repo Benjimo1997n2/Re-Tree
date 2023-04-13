@@ -14,8 +14,6 @@ class TreeView {
     }
 
     async update() {
-        console.log("Updating tree view");
-    
         // Dispose of the old mesh
         if (this.treeMesh) {
             this.treeMesh.forEach(mesh => {
@@ -42,6 +40,14 @@ class TreeView {
                     mesh.lvl = level;
                     mesh.position.set(x, y, z);
                     mesh.treeID = id; // Assign the treeID to the mesh
+
+                    // Add a physics impostor to the mesh
+                    mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+                        mesh,
+                        BABYLON.PhysicsImpostor.BoxImpostor,
+                        { mass: 0, restitution: 0.1, friction: 0.5 },
+                        this.scene
+                    );
                 });
     
                 // Store all meshes as an array in this.treeMeshes

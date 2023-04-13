@@ -9,6 +9,15 @@ async function initGame() {
     const scene = new BABYLON.Scene(engine);
     scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new BABYLON.CannonJSPlugin());
 
+    // Instantiate the GameGui class
+    const gameGui = new GameGui(scene, userDataModel.userToken, userDataModel.userData, userDataModel.score_flag);
+
+    // Instantiate the GameController class
+    const gameController = new GameController(gameGui, userDataModel);
+    // Instantiate the GameController
+    // const gameController = new GameController(gameGui, userDataModel);
+    gameController.initGameComponents(scene);
+
     const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 50, new BABYLON.Vector3(0, 0, 0), scene);
     camera.attachControl(renderCanvas, true);
 
@@ -17,14 +26,8 @@ async function initGame() {
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     const pointLight = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0, 5, 0), scene);
 
-    const groundModel = new GroundModel(scene);
+    // const groundModel = new GroundModel(scene);
     const antModel = new AntModel(scene);
-
-    // Instantiate the GameGui class
-    const gameGui = new GameGui(scene, userDataModel.userToken, userDataModel.userData, userDataModel.score_flag);
-
-    // Instantiate the GameController class
-    const gameController = new GameController(gameGui, userDataModel);
 
     // Create 25 trees
     const numTrees = userDataModel.userData.trees.length;
