@@ -10,10 +10,14 @@ async function initGame() {
     scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new BABYLON.CannonJSPlugin());
 
     // Instantiate the GameGui class
-    const gameGui = new GameGui(scene, userDataModel.userToken, userDataModel.userData, userDataModel.score_flag);
+    const audioModel = new AudioModel();
+
+    // Instantiate the GameGui class
+    const gameGui = new GameGui(scene, userDataModel.userToken, userDataModel.userData, userDataModel.score_flag, audioModel);
 
     // Instantiate the GameController class
     const gameController = new GameController(gameGui, userDataModel);
+
     // Instantiate the GameController
     // const gameController = new GameController(gameGui, userDataModel);
     gameController.initGameComponents(scene);

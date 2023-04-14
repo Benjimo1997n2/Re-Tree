@@ -1,5 +1,5 @@
 class GameGui {
-    constructor(scene, userToken, userData, score_flag) {
+    constructor(scene, userToken, userData, score_flag, audioModel) {
         this.scene = scene;
         this.userToken = userToken;
         this.userData = userData;
@@ -9,11 +9,13 @@ class GameGui {
         this.antController = new AntController(this.antModel, this.antView, scene);
         this.antModeActivated = false;
 
-
         this.GUI = BABYLON.GUI;
         this.advancedTexture = this.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
+        
         this.buildGui();
+        
+        this.audioModel = audioModel;
+        this.audioController = this.createAudioController();
     }
 
     buildGui() {
@@ -22,6 +24,52 @@ class GameGui {
         this.createScoreText();
         this.createTreeStatsContainer();
         this.createResetButton();
+        this.createMusicButtons();
+        this.createVolumeSlider();
+    }
+
+    /// Add this method to the GameGui class
+    createAudioController() {
+        this.audioController = new AudioController(this.audioModel, this);
+        this.audioController.initListeners();
+    }
+
+    createMusicButtons() {
+        // Mute/Unmute button
+        this.toggleMuteButton = BABYLON.GUI.Button.CreateImageOnlyButton.call(this.GUI.Button, "toggleMuteButton", "assets/picto/unmute_icon.png");
+        this.toggleMuteButton.width = "50px";
+        this.toggleMuteButton.height = "50px";
+        this.toggleMuteButton.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.toggleMuteButton.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.toggleMuteButton.paddingTop = "10px";
+        this.toggleMuteButton.paddingRight = "10px";
+        this.toggleMuteButton.zIndex = 1;
+        this.toggleMuteButton.id = "toggleMuteButton";
+        this.toggleMuteButton.onPointerClickObservable.add(() => {
+            if(this.audioModel.muted) {
+                this.toggleMuteButton.image.source = "assets/picto/mute_icon.png";
+            } else {
+                this.toggleMuteButton.image.source = "assets/picto/unmute_icon.png";
+            }
+        });
+        this.advancedTexture.addControl(this.toggleMuteButton);
+    }    
+
+    createVolumeSlider() {
+        this.volumeSlider = new this.GUI.Slider();
+        this.volumeSlider.minimum = 0;
+        this.volumeSlider.maximum = 100;
+        this.volumeSlider.value = 50; // Set initial volume value
+        this.volumeSlider.height = "20px";
+        this.volumeSlider.width = "150px";
+        this.volumeSlider.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.volumeSlider.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.volumeSlider.top = "60px";
+        this.volumeSlider.right = "10px";
+        this.volumeSlider.color = "white";
+        this.volumeSlider.background = "black";
+        this.volumeSlider.id = "volume-slider";
+        this.advancedTexture.addControl(this.volumeSlider);
     }
 
     // Tree stats container
@@ -168,9 +216,9 @@ class GameGui {
         this.antModeButton.color = "white";
         this.antModeButton.cornerRadius = 5;
         this.antModeButton.background = "rgba(0, 0, 0, 0.5)";
-        this.antModeButton.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        this.antModeButton.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        this.antModeButton.paddingTop = "10px";
+        this.antModeButton.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        this.antModeButton.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        this.antModeButton.paddingBottom = "10px";
         this.antModeButton.paddingRight = "10px";
         this.advancedTexture.addControl(this.antModeButton);
 
