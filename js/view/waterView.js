@@ -7,7 +7,7 @@ class WaterView {
     
     createWaterMesh() {
         const waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", {width: 200, height: 200}, this.scene);
-        waterMesh.position.y = -2;
+        waterMesh.position.y = -1.5;
         this.createWaterMaterial(waterMesh);
     }
     
