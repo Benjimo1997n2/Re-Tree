@@ -2,30 +2,58 @@ class GameController {
     constructor(gameGui, userDataModel) {
         this.gameGui = gameGui;
         this.userDataModel = userDataModel;
+        this.API_ENDPOINT = 'http://127.0.0.1:5000';
 
         this.init();
     }
 
     init() {
         this.updateScore();
-        setInterval(() => {
-            // Check if user have data
-            if (
-                this.userDataModel.userData.hasOwnProperty('CO2') &&
-                this.userDataModel.userData.hasOwnProperty('CO2_per_sec') &&
-                this.userDataModel.userData.hasOwnProperty('trees')
-            ) {
-                this.incrementScore(this.userDataModel.userData.CO2_per_sec);
-            } else {
-                this.resetScore();
-            }
-        }, 1000);
+        if(!this.userDataModel.visitor){
+            setInterval(() => {
+                // Check if user have data
+                if (
+                    this.userDataModel.userData.hasOwnProperty('CO2') &&
+                    this.userDataModel.userData.hasOwnProperty('CO2_per_sec') &&
+                    this.userDataModel.userData.hasOwnProperty('trees')
+                ) {
+                    this.incrementScore(this.userDataModel.userData.CO2_per_sec);
+                } else {
+                    this.resetScore();
+                }
+            }, 1000);
 
-        // Add an event listener to the reset button
-        this.gameGui.resetButton.onPointerUpObservable.add(() => {
-            this.resetScore();
-        });
+            setInterval(() => {
+                // this.sendUserDataToAPI();
+                // document.getElementById('example-form').submit();
+            }, 3000); // Call the API every 10 seconds    
+
+            // Add an event listener to the reset button
+            this.gameGui.resetButton.onPointerUpObservable.add(() => {
+                this.resetScore();
+            });
+        }
     }
+
+    sendUserDataToAPI(event) {
+        console.log('Sending user data to API');
+        event.preventDefault(); // Prevent page reload
+
+        fetch(`${this.API_ENDPOINT}/save_data`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                username: 'exampleUser', // Replace this with the actual username
+                trees: JSON.stringify(this.userDataModel.userData.trees),
+                CO2: this.userDataModel.userData.CO2,
+                CO2_per_sec: this.userDataModel.userData.CO2_per_sec,
+            }),
+        })
+        .then(response => response.json())
+        .then(console.log);
+    }    
 
     incrementScore(amount) {
         this.userDataModel.userData.CO2 += amount;

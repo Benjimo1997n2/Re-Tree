@@ -1,9 +1,8 @@
 class GameGui {
-    constructor(scene, userToken, userData, score_flag, audioModel) {
+    constructor(scene, userDataModel, audioModel) {
         this.scene = scene;
-        this.userToken = userToken;
-        this.userData = userData;
-        this.score_flag = score_flag;
+        this.userDataModel = userDataModel;
+        this.userData = userDataModel.userData;
         this.antModel = new AntModel(scene);
         this.antView = new AntView(this.antModel, scene);
         this.antController = new AntController(this.antModel, this.antView, scene);
@@ -20,10 +19,12 @@ class GameGui {
 
     buildGui() {
         this.createScoreboardContainer();
-        this.createAntModeButton();
         this.createScoreText();
         this.createTreeStatsContainer();
-        this.createResetButton();
+        if(!this.userDataModel.visitor) {
+            this.createAntModeButton();
+            this.createResetButton();
+        }
         this.createMusicButtons();
         this.createVolumeSlider();
     }
@@ -192,21 +193,6 @@ class GameGui {
     updateScoreText(value) {
         this.scoreText.text = `CO2: ${value}`;
     }
-
-    // updateScore(increment) {
-    //     if (this.score_flag["value"] == true) {
-    //         this.userData.CO2 = this.score_flag["data"]["CO2"];
-    //         this.userData.CO2_per_sec = this.score_flag["data"]["CO2_per_sec"];
-    //         this.userData.plants = this.score_flag["data"]["plants"];
-    //         this.score_flag["value"] = false;
-    //     }
-
-    //     this.userData.CO2 += increment;
-
-    //     this.scoreText.text = `CO2: ${this.userData.CO2}`;
-    //     this.updateUserDataPannel();
-    //     this.updateTokenValue(this.userToken, this.userData);
-    // }
 
     // Ant mode
     createAntModeButton() {

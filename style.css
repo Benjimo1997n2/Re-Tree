@@ -5,6 +5,10 @@ html, body {
     font-family: 'Arial', sans-serif;
 }
 
+#example-form {
+    display: none;
+}
+
 #renderCanvas {
     /* width: 80%; */
     width: 100%;
