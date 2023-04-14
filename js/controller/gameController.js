@@ -67,16 +67,17 @@ class GameController {
     initGameComponents(scene) {
         this.ground = new Ground(scene);
 
+        const groundSize = 100;
         const groundView = new GroundView(this.ground);
         
         const skyboxView = new SkyboxView(scene);
         skyboxView.createSkybox();
         
-        const continuousGroundView = new ContinuousGroundView(this.ground);
+        const continuousGroundView = new ContinuousGroundView(this.ground, groundSize);
         continuousGroundView.createContinuousGroundMesh();
         groundView.createGroundMesh();
 
-        const waterView = new WaterView(this.ground, continuousGroundView.continuousGround);
+        const waterView = new WaterView(this.ground, continuousGroundView.continuousGround, groundSize);
         waterView.createWaterMesh();
     }
 }

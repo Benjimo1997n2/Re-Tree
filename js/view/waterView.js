@@ -1,12 +1,13 @@
 class WaterView {
-    constructor(ground, continuousGround) {
+    constructor(ground, continuousGround, groundSize) {
         this.ground = ground.ground;
+        this.groundSize = groundSize;
         this.scene = ground.scene;
         this.continuousGround = continuousGround;
     }
     
     createWaterMesh() {
-        const waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", {width: 200, height: 200}, this.scene);
+        const waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", {width: this.groundSize, height: this.groundSize}, this.scene);
         waterMesh.position.y = -1.5;
         this.createWaterMaterial(waterMesh);
     }

@@ -1,12 +1,13 @@
 class ContinuousGroundView {
-    constructor(ground) {
+    constructor(ground, groundSize) {
         this.ground = ground.ground;
+        this.groundSize = groundSize;
         this.scene = ground.scene;
     }
     
     createContinuousGroundMesh() {
-        const continuousGround = BABYLON.MeshBuilder.CreateGround("continuousGround", {width: 200, height: 200, subdivisions: 10}, this.scene);
-        continuousGround.position.y = -1.8;
+        const continuousGround = BABYLON.MeshBuilder.CreateBox("continuousGround", {width: this.groundSize, depth: this.groundSize, height: 4}, this.scene); // Adjusted height and depth values
+        continuousGround.position.y = -4; // Adjusted the position to make sure the ground is placed correctly
         this.continuousGround = continuousGround;
         this.createDirtMaterial(continuousGround);
     }
