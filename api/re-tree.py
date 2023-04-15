@@ -63,6 +63,10 @@ def visit_user(username):
 
     return jsonify(users[username]), 200
 
+@app.route("/all_users", methods=["GET"])
+def all_users():
+    users = load_users()
+    return jsonify(users), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

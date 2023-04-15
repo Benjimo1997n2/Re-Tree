@@ -27,7 +27,7 @@
 
 ## Multiplayer
 - [x] Ads the visit to other players
-- [ ] Add the leaderboard
+- [x] Add the leaderboard
 - [ ] Add the possibility to play as guest (on cookies) or with username (no password)
 - [ ] Save automatically (we have an page refresh problem...)
 - [ ] Save on button press

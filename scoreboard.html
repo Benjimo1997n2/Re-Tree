@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    <table id="leaderboard">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>CO2</th>
+                <th>Visit</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+            <!-- Users will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        const API_ENDPOINT = 'http://127.0.0.1:5000';
+
+        // Fetch all users from the API
+        fetch(`${API_ENDPOINT}/all_users`)
+            .then(response => response.json())
+            .then(data => {
+                // Sort users by CO2 in descending order
+                const sortedUsers = Object.entries(data).sort((a, b) => b[1].CO2 - a[1].CO2);
+
+                // Populate the table with sorted users
+                const tableBody = document.getElementById('leaderboard-body');
+                sortedUsers.forEach(([username, userData]) => {
+                    const row = document.createElement('tr');
+
+                    const usernameCell = document.createElement('td');
+                    usernameCell.textContent = username;
+                    row.appendChild(usernameCell);
+
+                    const co2Cell = document.createElement('td');
+                    co2Cell.textContent = userData.CO2;
+                    row.appendChild(co2Cell);
+
+                    const visitCell = document.createElement('td');
+                    const visitLink = document.createElement('a');
+                    visitLink.href = `index.html?visit=${encodeURIComponent(username)}`;
+                    visitLink.textContent = 'Visit';
+                    visitCell.appendChild(visitLink);
+                    row.appendChild(visitCell);
+
+                    tableBody.appendChild(row);
+                });
+            });
+    </script>
+</body>
+</html>
