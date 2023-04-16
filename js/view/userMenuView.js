@@ -43,6 +43,12 @@ class UserMenuView {
         this.gameGui.advancedTexture.addControl(this.userMenu); // Add the user menu to the game GUI
     }    
 
+    setVisible(visible) {
+        if (this.userMenu) {
+            this.userMenu.isVisible = visible;
+        }
+    }    
+
     showUsernameInput() {
         this.usernameInput = new BABYLON.GUI.InputText();
         this.usernameInput.width = "80%";
@@ -113,7 +119,7 @@ class UserMenuView {
         this.userMenu.addControl(this.validateButton);
         this.userMenu.addControl(this.cancelButton);
     }
-    
+
     displayErrorMessage(message) {
         this.errorMessageLabel.text = message;
     }

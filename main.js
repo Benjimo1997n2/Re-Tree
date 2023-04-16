@@ -29,8 +29,8 @@ async function initGame() {
     // Instantiate the GameController class
     const gameController = new GameController(gameGui, userDataModel);
 
-    // Instantiate the GameController
-    // const gameController = new GameController(gameGui, userDataModel);
+    this.userMenuController = new UserMenuController(gameGui, userDataModel);
+
     gameController.initGameComponents(scene);
 
     const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 50, new BABYLON.Vector3(0, 0, 0), scene);
@@ -75,8 +75,6 @@ async function initGame() {
     // Wait for all tree models to load
     await Promise.all(treeViews.map(treeView => treeView.loadTreeMesh()));
 
-    // const treeController = new TreeController(scene, groundModel, treeViews);
-
     engine.runRenderLoop(function() {
         scene.render();
     });
@@ -85,12 +83,8 @@ async function initGame() {
         engine.resize();
     });
 
-    init(gameGui, userDataModel);
-}
-
-// Create an init function that shows the user menu first
-async function init(gameGui, userDataModel) {
-    // Instantiate the UserMenuController class and show the menu
-    const userMenuController = new UserMenuController(gameGui, userDataModel);
-    await userMenuController.showMenu();
+    // If a guest is playing, show the user menu
+    if (userDataModel.guest) {
+        await userMenuController.showMenu();
+    }
 }

@@ -28,16 +28,17 @@
 ## Multiplayer
 - [x] Ads the visit to other players
 - [x] Add the leaderboard
-- [ ] Add the possibility to play as guest (on cookies) or with username (no password)
+- [x] Add the possibility to play as guest (on cookies) or with username (no password)
 - [ ] Save automatically (we have an page refresh problem...)
 - [ ] Save on button press
+- [ ] Change the mecanism of guest using and adding username on cookies
 
 ## Events
 - [ ] Write the spontaneous questions to earn CO2
 - [ ] Generate CO2 on the map when ant mode is ON
 
 ## Story
-- [ ] Create the cinematic
+- [x] Create the cinematic
 - [ ] Write the story
 - [ ] Set dialogues of introduction explaining the goal of the game
 

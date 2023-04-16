@@ -2,8 +2,17 @@ class UserDataModel {
     constructor() {
         this.userToken = this.createToken();
         this.userData = this.getTokenValue(this.userToken);
+        this.visitor = false;
+        this.guest = true;
         if (!this.userData) {
             this.userData = {}; // Initialize as an empty object
+        } else {
+            if (this.userData.username) {
+                console.log(this.userData.username);
+                this.guest = false;
+            } else {
+                console.log('Guest');
+            }
         }
     }
 

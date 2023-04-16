@@ -2,12 +2,37 @@ class UserMenuController {
     constructor(gameGui, userDataModel) {
         this.gameGui = gameGui;
         this.userDataModel = userDataModel;
+
+        this.userMenuView = new UserMenuView(this.gameGui);
+        
+        this.setupUserMenuButtonEvent();
+    }
+
+    setupUserMenuButtonEvent() {
+        this.gameGui.userMenuButton.onPointerUpObservable.add(async () => {
+            console.log('User menu button clicked');
+            if (this.isMenuVisible()) {
+                this.hideMenu();
+            } else {
+                await this.showMenu();
+            }
+        });
+    }
+
+    isMenuVisible() {
+        return this.userMenuView && this.userMenuView.userMenu && this.userMenuView.userMenu.isVisible;
+    }
+
+    async hideMenu() {
+        if (this.userMenuView) {
+            this.userMenuView.setVisible(false);
+        }
     }
 
     async showMenu() {
-        const userMenuView = new UserMenuView(this.gameGui);
-        await userMenuView.init();
-        userMenuView.onOptionSelected = async (option) => {
+        await this.userMenuView.init();
+        this.userMenuView.setVisible(true);
+        this.userMenuView.onOptionSelected = async (option) => {
             switch (option) {
                 case 1:
                     // Create new user
@@ -15,13 +40,13 @@ class UserMenuController {
                     break;
                 case 2:
                     // Connect user
-                    userMenuView.showUsernameInput();
+                    this.userMenuView.showUsernameInput();
                     // Add your connect user logic here
                     break;
                 case 3:
                     // Play as guest
                     // We just continue like nothing happened because default is guest
-                    userMenuView.dispose();
+                    this.userMenuView.dispose();
                     break;
                 case 4:
                     // Watch cinematic
@@ -34,7 +59,7 @@ class UserMenuController {
             }
         };
 
-        userMenuView.onUsernameValidate = async (username) => {
+        this.userMenuView.onUsernameValidate = async (username) => {
             // Add your fetch user logic here
             fetch(`http://127.0.0.1:5000/visit_user/${username}`)
                 .then(response => {
@@ -50,18 +75,18 @@ class UserMenuController {
                     // Perform any additional actions with the fetched data, if necessary
 
                     // Close the user menu after fetching the data
-                    userMenuView.dispose();
+                    this.userMenuView.dispose();
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     // Display an error message
-                    userMenuView.displayErrorMessage('User not found. Please try again.');
+                    this.userMenuView.displayErrorMessage('User not found. Please try again.');
                 });
         };
 
-        userMenuView.onUsernameCancel = () => {
+        this.userMenuView.onUsernameCancel = () => {
             // Close the user menu without fetching the data
-            userMenuView.dispose();
+            this.userMenuView.setVisible(false);
         };
     }
 

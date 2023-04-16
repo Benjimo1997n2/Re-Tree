@@ -22,11 +22,26 @@ class GameGui {
         this.createScoreText();
         this.createTreeStatsContainer();
         if(!this.userDataModel.visitor) {
+            this.createUserMenuButton();
             this.createAntModeButton();
             this.createResetButton();
         }
         this.createMusicButtons();
         this.createVolumeSlider();
+    }
+
+    createUserMenuButton() {
+        this.userMenuButton = this.GUI.Button.CreateSimpleButton("userMenuButton", "User Menu");
+        this.userMenuButton.width = "100px";
+        this.userMenuButton.height = "40px";
+        this.userMenuButton.color = "white";
+        this.userMenuButton.background = "blue";
+        this.userMenuButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.userMenuButton.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.userMenuButton.top = "10px";
+        this.userMenuButton.left = "-60px";
+        this.userMenuButton.zIndex = 10; // Make sure the button is on top of other GUI elements
+        this.advancedTexture.addControl(this.userMenuButton);
     }
 
     /// Add this method to the GameGui class
