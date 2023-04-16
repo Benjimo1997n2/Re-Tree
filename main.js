@@ -84,4 +84,13 @@ async function initGame() {
     window.addEventListener('resize', () => {
         engine.resize();
     });
+
+    init(gameGui, userDataModel);
+}
+
+// Create an init function that shows the user menu first
+async function init(gameGui, userDataModel) {
+    // Instantiate the UserMenuController class and show the menu
+    const userMenuController = new UserMenuController(gameGui, userDataModel);
+    await userMenuController.showMenu();
 }
