@@ -1,5 +1,6 @@
 {
     "exampleUser": {
+        "username": "exampleUser",
         "CO2": 977,
         "CO2_per_sec": 1,
         "trees": [

@@ -43,6 +43,81 @@ class UserMenuView {
         this.gameGui.advancedTexture.addControl(this.userMenu); // Add the user menu to the game GUI
     }    
 
+    showUsernameInput() {
+        this.usernameInput = new BABYLON.GUI.InputText();
+        this.usernameInput.width = "80%";
+        this.usernameInput.height = "20%";
+        this.usernameInput.color = "white";
+        this.usernameInput.background = "black";
+        this.usernameInput.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.usernameInput.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        this.usernameInput.top = "70%"; // Adjust this value if needed
+
+        this.usernameInput.onBlurObservable.add(() => {
+            if (this.onUsernameEntered) {
+                this.onUsernameEntered(this.usernameInput.text);
+            }
+        });
+
+        this.userMenu.addControl(this.usernameInput);
+        this.usernameInput.focus();
+
+        // Add the validation and cancel buttons
+        this.showValidateAndCancelButtons();
+
+        // Add an error message label
+        this.errorMessageLabel = new BABYLON.GUI.TextBlock();
+        this.errorMessageLabel.text = "";
+        this.errorMessageLabel.color = "red";
+        this.errorMessageLabel.fontSize = 18;
+        this.errorMessageLabel.height = "20%";
+        this.errorMessageLabel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.errorMessageLabel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        this.errorMessageLabel.top = "90%"; // Adjust this value if needed
+        this.userMenu.addControl(this.errorMessageLabel);
+    }
+
+    showValidateAndCancelButtons() {
+        this.validateButton = BABYLON.GUI.Button.CreateSimpleButton("validateButton", "Validate");
+        this.validateButton.width = "40%";
+        this.validateButton.height = "20%";
+        this.validateButton.color = "white";
+        this.validateButton.background = "green";
+        this.validateButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.validateButton.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.validateButton.top = "50%"; // Adjust this value if needed
+        this.validateButton.left = "5%";
+
+        this.validateButton.onPointerUpObservable.add(() => {
+            if (this.onUsernameValidate) {
+                this.onUsernameValidate(this.usernameInput.text);
+            }
+        });
+
+        this.cancelButton = BABYLON.GUI.Button.CreateSimpleButton("cancelButton", "Cancel");
+        this.cancelButton.width = "40%";
+        this.cancelButton.height = "20%";
+        this.cancelButton.color = "white";
+        this.cancelButton.background = "red";
+        this.cancelButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.cancelButton.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.cancelButton.top = "50%"; // Adjust this value if needed
+        this.cancelButton.left = "-5%";
+
+        this.cancelButton.onPointerUpObservable.add(() => {
+            if (this.onUsernameCancel) {
+                this.onUsernameCancel();
+            }
+        });
+
+        this.userMenu.addControl(this.validateButton);
+        this.userMenu.addControl(this.cancelButton);
+    }
+    
+    displayErrorMessage(message) {
+        this.errorMessageLabel.text = message;
+    }
+
     dispose() {
         this.userMenu.dispose();
     }

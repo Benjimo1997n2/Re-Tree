@@ -7,7 +7,7 @@ fetch('http://127.0.0.1:5000/create_user', {
   .then(console.log);
 
 // Saving user data
-fetch('http://localhost:5000/save_data', {
+fetch('http://127.0.0.1:5000/save_data', {
   method: 'POST',
   body: new URLSearchParams({
     username: 'exampleUser',
@@ -19,6 +19,6 @@ fetch('http://localhost:5000/save_data', {
   .then(console.log);
 
 // Visiting another user
-fetch('http://localhost:5000/visit_user/exampleUser')
+fetch('http://127.0.0.1:5000/visit_user/exampleUser')
   .then(response => response.json())
   .then(console.log);

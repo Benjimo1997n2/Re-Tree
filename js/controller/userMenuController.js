@@ -15,6 +15,7 @@ class UserMenuController {
                     break;
                 case 2:
                     // Connect user
+                    userMenuView.showUsernameInput();
                     // Add your connect user logic here
                     break;
                 case 3:
@@ -31,6 +32,36 @@ class UserMenuController {
                     // Add your read storyline logic here
                     break;
             }
+        };
+
+        userMenuView.onUsernameValidate = async (username) => {
+            // Add your fetch user logic here
+            fetch(`http://127.0.0.1:5000/visit_user/${username}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('User not found');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    this.userDataModel.userData = data;
+                    // Perform any additional actions with the fetched data, if necessary
+
+                    // Close the user menu after fetching the data
+                    userMenuView.dispose();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Display an error message
+                    userMenuView.displayErrorMessage('User not found. Please try again.');
+                });
+        };
+
+        userMenuView.onUsernameCancel = () => {
+            // Close the user menu without fetching the data
+            userMenuView.dispose();
         };
     }
 
