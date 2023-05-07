@@ -21,6 +21,7 @@ class GameGui {
         this.createScoreboardContainer();
         this.createScoreText();
         this.createTreeStatsContainer();
+        this.createTreeSlidersContainer();
         if(!this.userDataModel.visitor) {
             this.createUserMenuButton();
             this.createAntModeButton();
@@ -86,6 +87,52 @@ class GameGui {
         this.volumeSlider.background = "black";
         this.volumeSlider.id = "volume-slider";
         this.advancedTexture.addControl(this.volumeSlider);
+    }
+
+    // Create slider
+    createSlider(name, top) {
+        let slider = new this.GUI.Slider(name);
+        slider.width = "200px";
+        slider.height = "20px";
+        slider.color = "white";
+        slider.background = "black";
+        slider.value = 0.5;
+        slider.minimum = -50;
+        slider.maximum = 50;
+        slider.top = top;
+        slider.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        slider.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        // slider.onValueChangedObservable.add((value) => {
+        //     console.log(name + " value changed to: " + value);
+        // });
+
+        return slider;
+    }
+    
+    createTreeSlidersContainer() {
+        this.treeSlidersContainer = new this.GUI.Rectangle("treeSlidersContainer");
+        this.treeSlidersText = this.createTreeStatsTextBlock("Move tree", "10px");
+        this.treeSlidersContainer.addControl(this.treeSlidersText);
+        this.treeSlidersContainer.width = "460px";
+        this.treeSlidersContainer.height = "120px";
+        this.treeSlidersContainer.cornerRadius = 5;
+        this.treeSlidersContainer.color = "white";
+        this.treeSlidersContainer.thickness = 2;
+        this.treeSlidersContainer.background = "rgba(0, 0, 0, 0.5)";
+        this.treeSlidersContainer.verticalAlignment = this.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        this.treeSlidersContainer.horizontalAlignment = this.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.treeSlidersContainer.paddingBottom = "10px"; // Increase padding to make space for the upgrade button
+        this.treeSlidersContainer.paddingLeft = "240px";
+        this.advancedTexture.addControl(this.treeSlidersContainer);
+
+        // Create sliders
+        this.sliderX = this.createSlider("Slider X", "40px");
+        this.sliderZ = this.createSlider("Slider Z", "70px");
+    
+        // Add sliders to the container
+        this.treeSlidersContainer.addControl(this.sliderX);
+        this.treeSlidersContainer.addControl(this.sliderZ);
+        this.treeSlidersContainer.isVisible = false;
     }
 
     // Tree stats container
@@ -158,12 +205,18 @@ class GameGui {
 
     updateTreeStats(treeModel) {
         this.treeStatsContainer.isVisible = true;
+        this.treeSlidersContainer.isVisible = true;
+        // Set the initial values of the sliders based on the treeModel's position
+        // this.sliderX.value = treeModel.x;
+        // this.sliderZ.value = treeModel.z;
+        
         this.treeIdText.text = `Tree's ID: ${treeModel.id}`;
         this.treeLevelText.text = `Current Level: ${treeModel.level}`;
     }
 
     hideTreeStats() {
         this.treeStatsContainer.isVisible = false;
+        this.treeSlidersContainer.isVisible = false;
     }
 
     // Reset button

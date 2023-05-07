@@ -3,14 +3,12 @@ class TreeView {
         this.treeModel = treeModel;
         this.scene = scene;
         this.treeMesh = null;
-        // this.controller = controller;
 
         // this.init();
     }
 
     async init() {
         this.treeMesh = await this.loadTreeMesh();
-        // this.attachEvents();
     }
 
     async update() {
@@ -24,10 +22,24 @@ class TreeView {
         // Load the new mesh
         this.treeMesh = await this.loadTreeMesh();
     }    
+
+    updateTreePosition(treeModel) {
+        console.log("Updating tree position", treeModel); // Log the treeModel to check the values
+
+        this.treeMesh.forEach(mesh => {
+            if (mesh.treeID === treeModel.id) {
+                mesh.position.set(treeModel.x, treeModel.y, treeModel.z);
+                // Refresh the scene
+            } else {
+                console.log("mesh.treeID ", mesh.treeID);
+                console.log("treeModel.id ", treeModel.id);
+            }
+        });
+        // this.update()
+    }    
     
     loadTreeMesh() {
         const { id, level, x, y, z } = this.treeModel;
-        // console.log("x, y, z: ", x, y, z);
         const rootPath = "assets/trees/";
         const modelFileName = `tree_lvl_${level}.obj`;
         const materialsFileName = `tree_lvl_${level}.mtl`;
@@ -57,5 +69,5 @@ class TreeView {
                 resolve(meshes);
             });
         });
-    }    
+    }
 }

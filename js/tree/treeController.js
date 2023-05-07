@@ -7,33 +7,73 @@ class TreeController {
         this.selectedTree = null;
         this.buyButton = null;
 
-        this.initializeEventListeners();
         this.attachEvents();
     }
-
-    initializeEventListeners() {
-        this.buyButton = document.getElementById("buy_tree");
-    }
-
-    attachEvents() {
-        this.treeView.treeMesh.forEach(mesh => {
-            mesh.actionManager = new BABYLON.ActionManager(this.treeView.scene);
-            mesh.actionManager.registerAction(
-                new BABYLON.ExecuteCodeAction(
-                    BABYLON.ActionManager.OnPickTrigger,
-                    (evt) => this.handleTreeClick(evt, this.treeView.treeModel)
-                )
-            );
-        });
-    }
-
+            
     handleTreeClick(evt, treeModel) {
+        this.selectedTree = treeModel;
+        console.log(this.treeView)
+        console.log(this.selectedTree)
         const upgradeCost = this.treeUpgraderModel.getUpgradeCost(treeModel.level + 1);
         this.gameGui.updateTreeStats(treeModel);
         this.gameGui.updateUpgradeCost(upgradeCost);
         this.gameGui.showUpgradeButton(() => {
             this.handleUpgradeTree(treeModel);
         });
+
+        // Remove previous observables
+        this.gameGui.sliderX.onValueChangedObservable.clear();
+        this.gameGui.sliderZ.onValueChangedObservable.clear();
+
+        this.gameGui.sliderX.value = treeModel.x;
+        this.gameGui.sliderZ.value = treeModel.z;
+
+        // Subscribe to slider value changes
+        this.gameGui.sliderX.onValueChangedObservable.add((value) => {
+            this.handleSliderXChange(value);
+        });
+        this.gameGui.sliderZ.onValueChangedObservable.add((value) => {
+            this.handleSliderZChange(value);
+        });
+    }
+
+    updateTreePosition(x, z) {
+        if (this.selectedTree ) {
+            this.selectedTree.x = x;
+            this.selectedTree.z = z;
+            this.treeView.updateTreePosition(this.selectedTree);
+        }
+    }
+
+    handleSliderXChange(value) {
+        if (this.selectedTree) {
+            this.updateTreePosition(value, this.selectedTree.z);
+            this.userDataModel.userData.trees[this.selectedTree.id].x = value;
+            this.userDataModel.saveUserData()
+        } else {
+            console.log("No selected tree");
+        }
+    }
+    
+    handleSliderZChange(value) {
+        if (this.selectedTree) {
+            this.updateTreePosition(this.selectedTree.x, value);
+            this.userDataModel.userData.trees[this.selectedTree.id].z = value;
+            this.userDataModel.saveUserData()
+        }
+    }
+
+    
+    attachEvents() {
+        this.treeView.treeMesh.forEach(mesh => {
+            mesh.actionManager = new BABYLON.ActionManager(this.treeView.scene);
+            mesh.actionManager.registerAction(
+                new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnPickTrigger,
+                        (evt) => this.handleTreeClick(evt, this.treeView.treeModel)
+                    )
+                    );
+                });
     }
 
     updateView(treeModel) {
@@ -73,23 +113,5 @@ class TreeController {
         } else {
             console.log("Not enough CO2 to buy the upgrade.");
         }
-    }    
-
-    handleBuyTree(treeModel) {
-        // Check if the user has enough resources for the upgrade
-        // Upgrade the tree's level and update the user's resources
-    }    
-
-    generateTrees() {
-        const treeArray = [];
-
-        for (let i = 0; i < this.treeModels.length; i++) {
-            const treeModel = this.treeModels[i];
-            const treeView = new TreeView(treeModel, this.treeView.scene);
-
-            treeArray.push(treeView.treeMesh);
-        }
-
-        return treeArray;
     }
 }    
