@@ -27,6 +27,10 @@ def options(path):
 
 DATABASE_FILE = "users.json"
 
+@app.route('/')
+def index():
+    # A welcome message to test our server
+    return "<h1>Welcome to our re-tree-api!</h1>"
 
 def load_users():
     if os.path.exists(DATABASE_FILE):
